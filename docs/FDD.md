@@ -197,6 +197,62 @@ Disponibiliza o reprocessamento manual de uma notificação morta. Exclusivo par
 }
 ```
 
+### 5.5. Atualizar Webhook (PATCH)
+Permite ao cliente alterar as configurações do webhook, como URL, eventos assinados ou estado ativo.
+* **Endpoint**: `PATCH /webhooks/:id`
+* **Autenticação**: Requer JWT (qualquer perfil ativo).
+* **Request Header**: `Content-Type: application/json`
+* **Request Payload Exemplo**:
+```json
+{
+  "url": "https://api.atlascomercial.com.br/new-route/orders",
+  "events": ["SHIPPED", "DELIVERED", "CANCELLED"],
+  "active": true
+}
+```
+* **Response Status**: `200 OK`
+* **Response Payload Exemplo**:
+```json
+{
+  "id": "fe56bc44-bc8c-42cb-b1b7-98e6dcb44222",
+  "customerId": "d3b07384-d113-4ec2-a5d5-bd8a329d5b0c",
+  "url": "https://api.atlascomercial.com.br/new-route/orders",
+  "events": ["SHIPPED", "DELIVERED", "CANCELLED"],
+  "active": true,
+  "createdAt": "2026-08-15T12:00:00.000Z",
+  "updatedAt": "2026-08-15T14:22:10.000Z"
+}
+```
+
+### 5.6. Remover Webhook (DELETE)
+Exclui permanentemente um cadastro de webhook do banco de dados.
+* **Endpoint**: `DELETE /webhooks/:id`
+* **Autenticação**: Requer JWT (qualquer perfil ativo).
+* **Request Payload**: Nulo / Vazio.
+* **Response Status**: `204 No Content`
+* **Response Payload Exemplo**: Nulo / Vazio.
+
+### 5.7. Listar Webhooks de um Customer (GET List)
+Recupera todos os webhooks configurados associados a um determinado cliente (Customer).
+* **Endpoint**: `GET /webhooks/customer/:customerId`
+* **Autenticação**: Requer JWT.
+* **Response Status**: `200 OK`
+* **Response Payload Exemplo**:
+```json
+{
+  "customerId": "d3b07384-d113-4ec2-a5d5-bd8a329d5b0c",
+  "webhooks": [
+    {
+      "id": "fe56bc44-bc8c-42cb-b1b7-98e6dcb44222",
+      "url": "https://api.atlascomercial.com.br/new-route/orders",
+      "events": ["SHIPPED", "DELIVERED", "CANCELLED"],
+      "active": true,
+      "createdAt": "2026-08-15T12:00:00.000Z"
+    }
+  ]
+}
+```
+
 ---
 
 ## 6. Matriz de Erros Previstos
